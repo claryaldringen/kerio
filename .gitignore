@@ -1,0 +1,8 @@
+/bower_components
+/.idea
+/coffee/*.map
+/coffee/*.js
+/tests/*.map
+/tests/*.js
+/karma.conf.js
+/karma.conf.map

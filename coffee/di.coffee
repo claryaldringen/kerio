@@ -8,3 +8,7 @@ class Kerio.Di
 	getRequest: ->
 		@services['request'] = new Kerio.Request() if not @services['request']?
 		@services['request']
+
+	getListFactory: (id) ->
+		@services['listFactory'] = {}
+		@services['listFactory'][id] = new Kerio.ListFactory id, @, null

@@ -1,20 +1,15 @@
 
-class Kerio.SortableList
+class Kerio.SortableList extends Kerio.Component
 
-	constructor: (@id, @di) ->
+	constructor: (@id, @di, parent) ->
 		@issues = []
 		@name = ''
 
 	setName: (@name) -> @
 
-	load: ->
-		@di.getRequest().addTask(@di.createTask('url', {}, @loadResponse, @)).send()
+	add: (issue) ->
+		@issues.push issue
 		@
-
-	loadResponse: (response, me) ->
-		response.issues.sort (prev, next) -> prev.priority - next.priority
-		me.issues = response.issues
-		me.render()
 
 	save: (sort) ->
 		@issues[index].priority = (sortedIndex+1) for issue, index in @issues when key.indexOf(issue.id) > -1 for key,sortedIndex in sort

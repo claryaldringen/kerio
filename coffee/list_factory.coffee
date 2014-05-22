@@ -16,8 +16,8 @@ class Kerio.ListFactory extends Kerio.Component
 		response.issues.sort (prev, next) -> prev.priority - next.priority
 		for issue in response.issues
 			if not @lists[issue.list]?
-				@lists[issue.list] = new Kerio.SortableList @id + '_' + issue.list, @di, @
-				@lists[issue.list].setName issue.list
+				@lists[issue.list] = new Kerio.SortableList @id + '_' + issue.list.replace(' ', '_'), @di, @
+				@lists[issue.list].setName(issue.list)
 			@lists[issue.list].add issue
 		@render()
 

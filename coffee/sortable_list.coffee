@@ -1,9 +1,12 @@
 
 class Kerio.SortableList extends Kerio.Component
 
-	constructor: (@id, @di, parent) ->
+	constructor: (id, di, parent) ->
+		super id, di, parent
 		@issues = []
 		@name = ''
+
+	getElListId: -> @id + '_ul'
 
 	setName: (@name) -> @
 
@@ -17,14 +20,13 @@ class Kerio.SortableList extends Kerio.Component
 
 	saveResponse: (response, me) ->
 
-	render: ->
-		document.getElementById(@id).innerHTML = @getHtml()
-		@bindEvents()
-		@
-
 	bindEvents: ->
+		$('#' + @getElListId()).sortable connectWith: '.connected', update: (event, ui) => @save $('#' + @getElListId()).sortable 'toArray', {attribute: 'issueid'}
+
 
 	getHtml: ->
-		html = '<div class="title">' + @name + '</div><ul>'
-		html += '<li class="issue">' + issue.name + '</li>' for issue in @issues
+		html = '<div class="title">' + @name + '</div><ul id="' + @getElListId() + '"'
+		html += 'class="connected"' if @name in ['backlog','Sprint 1']
+		html += '>'
+		html += '<li class="issue" issueid="' + issue.id + '">' + issue.name + '</li>' for issue in @issues
 		html += '</ul>'

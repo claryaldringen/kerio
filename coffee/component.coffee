@@ -11,4 +11,4 @@ class Kerio.Component
 		@
 
 	bindEvents: ->
-		child.bindEvents() for child of @children
+		child.bindEvents() for id,child of @children

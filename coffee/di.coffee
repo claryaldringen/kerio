@@ -12,3 +12,7 @@ class Kerio.Di
 	getListFactory: (id) ->
 		@services['listFactory'] = {}
 		@services['listFactory'][id] = new Kerio.ListFactory id, @, null
+
+	getScrumBoard: (id) ->
+		@services['scrumBoard'] = {}
+		@services['scrumBoard'][id] = new Kerio.ScrumBoard id, @, null

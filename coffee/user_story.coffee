@@ -11,6 +11,8 @@ class Kerio.UserStory extends Kerio.Component
 
 	getTicketsByStatusId: (statusId) -> ticket for ticketId, ticket of @tickets when ticket.statusId is statusId
 
+	getTicketById: (ticketId) -> @tickets[ticketId]
+
 	addTicket: (ticket) ->
 		@tickets[ticket.id] = ticket
 		@

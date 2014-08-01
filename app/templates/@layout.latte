@@ -1,0 +1,37 @@
+{**
+ * @param string   $basePath web base path
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>{ifset #title}{include title|striptags} | {/ifset}Nette Sandbox</title>
+
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
+	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	<script type="text/javascript" src="{$basePath}/bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="{$basePath}/bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/kerio.js"></script>
+	<script type="text/javascript" src="{$basePath}/coffee/component.js"></script>
+	<script type="text/javascript" src="{$basePath}/coffee/di.js"></script>
+	<script type="text/javascript" src="{$basePath}/coffee/request.js"></script>
+	<script type="text/javascript" src="{$basePath}/coffee/task.js"></script>
+	<script type="text/javascript" src="{$basePath}/coffee/sortable_list.js"></script>
+	<script type="text/javascript" src="{$basePath}/coffee/list_factory.js"></script>
+	<script type="text/javascript" src="{$basePath}/coffee/scrum_board.js"></script>
+	<script type="text/javascript" src="{$basePath}/coffee/user_story.js"></script>
+	<script type="text/javascript" src="{$basePath}/coffee/ticket.js"></script>
+	<script type="text/javascript" src="{$basePath}/coffee/run.js"></script>
+</head>
+
+<body>
+		<a href="{plink Ajax:loadStories}">foo</a>
+    <div id="lists"></div>
+    <div id="scrum_board"></div>
+		{include content}
+</body>
+</html>

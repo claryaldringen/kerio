@@ -1,0 +1,31 @@
+
+li.issue {
+	border: solid 1px black;
+}
+
+div.left {
+	width: 300px;
+	float: left;
+}
+
+div.right {
+	width: 300px;
+	float: right;
+}
+
+ul {
+	padding: 15px 5px;
+	background: #CCC;
+}
+
+li {
+	list-style-type: none;
+}
+
+td {
+	border: solid 1px black;
+}
+
+div.scrumboard {
+	clear: both;
+}

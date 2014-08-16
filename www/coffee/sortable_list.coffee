@@ -5,28 +5,33 @@ class Kerio.SortableList extends Kerio.Component
 		super id, di, parent
 		@issues = []
 		@name = ''
+		@listId = null
 
 	getElListId: -> @id + '_ul'
 
 	setName: (@name) -> @
 
-	add: (issue) ->
-		@issues.push issue
+	getName: -> @name
+
+	setListId: (@listId) -> @
+
+	getListId: -> @listId
+
+	setIssue: (newIssue) ->
+		return @ for issue in @issues when issue.id is newIssue.id
+		@issues.push newIssue
 		@
 
 	save: (sort) ->
-		@issues[index].priority = (sortedIndex+1) for issue, index in @issues when key.indexOf(issue.id) > -1 for key,sortedIndex in sort
+		@parent.setListToIssue(@, issueId).setPriorityToIssue(sortKey, issueId) for issueId, sortKey in sort
+		@parent.save().balanceIssues()
 		@
-
-	saveResponse: (response, me) ->
 
 	bindEvents: ->
 		$('#' + @getElListId()).sortable connectWith: '.connected', update: (event, ui) => @save $('#' + @getElListId()).sortable 'toArray', {attribute: 'issueid'}
 
 
 	getHtml: ->
-		html = '<div class="title">' + @name + '</div><ul id="' + @getElListId() + '"'
-		html += 'class="connected"' if @name in ['backlog','Sprint 1']
-		html += '>'
+		html = '<div class="title">' + @name + '</div><ul id="' + @getElListId() + '" class="connected">'
 		html += '<li class="issue" issueid="' + issue.id + '">' + issue.name + '</li>' for issue in @issues
 		html += '</ul>'

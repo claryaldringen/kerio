@@ -7,6 +7,8 @@ class Kerio.Ticket extends Kerio.Component
 
 	setTicketId: (@ticketId) -> @
 
+	getTicketId: -> @ticketId
+
 	dragStart: (event) -> event.dataTransfer.setData 'Text', JSON.stringify {id: @id, ticket_id: @ticketId, status_id: @statusId}
 
 	bindEvents: ->

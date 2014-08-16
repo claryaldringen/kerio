@@ -9,23 +9,31 @@ class Kerio.ScrumBoard extends Kerio.Component
 	getElPlaceId: (userStoryId, statusId) -> @id + '_' + userStoryId + '_' + statusId
 
 	load: ->
-		@di.getRequest().addTask(@di.createTask('tests/requests/stories.json', {}, @loadResponse, @)).send()
+		@di.getRequest().addTask(@di.createTask('ajax/load-scrumboard', {}, @loadResponse, @)).send()
 		@
 
 	loadResponse: (response) ->
-		for story in response
+		@statuses = response.statuses
+		for story in response.stories
 			storyId = @id + '_' + story.id
 			@userStories[storyId] = new Kerio.UserStory storyId, @di, @
 			@userStories[storyId].setName(story.name).setDescription story.description
 			for ticket in story.tickets
 				kTicket = new Kerio.Ticket storyId + '_' + ticket.id, @di, @
-				kTicket.setStatusId(ticket.status_id).setName ticket.name
+				kTicket.setStatusId(ticket.status_id).setName(ticket.name).setTicketId(ticket.id)
 				@userStories[storyId].addTicket kTicket
 		@render()
 
+	save: (ticketId, statusId) ->
+		@di.getRequest().addTask(@di.createTask('ajax/save-scrumboard', {ticketId: ticketId, statusId: statusId}, @saveResponse, @)).send()
+		@
+
+	saveResponse: (response) ->
+
 	dropTicket: (userStoryId, ticketId, statusId) ->
-		@userStories[userStoryId].getTicketById(ticketId).setStatusId statusId*1
-		@render()
+		ticket = @userStories[userStoryId].getTicketById ticketId
+		ticket.setStatusId statusId*1
+		@save(ticket.getTicketId(), statusId).render()
 
 	bindEvents: ->
 		super()

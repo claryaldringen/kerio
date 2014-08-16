@@ -10,8 +10,7 @@
 
 	<title>{ifset #title}{include title|striptags} | {/ifset}Nette Sandbox</title>
 
-	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
-	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/main.css">
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
 	<script type="text/javascript" src="{$basePath}/bower_components/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="{$basePath}/bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
@@ -29,7 +28,6 @@
 </head>
 
 <body>
-		<a href="{plink Ajax:loadStories}">foo</a>
     <div id="lists"></div>
     <div id="scrum_board"></div>
 		{include content}

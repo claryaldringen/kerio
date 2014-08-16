@@ -11,4 +11,9 @@ Instalace
 6. Nainstalujte si CoffeeScript (npm install -g coffee-script)
 7. Přeložte *.coffee soubory (coffee --compile coffee/)
 8. Naunstalujte si web server Apache2 (poběží na jakémkoli webserveru, který zvládne PHP, ale např. u nginx neumí htaccess a direktivy v něm uvedené je třeba řešit jinak)
-9. Pokud vše problěho úspěšně, po otevření souboru index.php byste měli něco vidět :)
+9. Nainstalujte si Composer podle návodu zde (http://doc.nette.org/cs/2.2/composer)
+10. Spusťe příkaz ```composer install```
+11. V adresáři projektu vytvořte adresáře log a dir a nastavte jim práva.
+12. Nastavte si virtualhosta.
+13. V adresáři vendors si založte podadresář others a tam nakopírujte dibi (http://dibiphp.com/en/download)
+14. Pokud vše problěho úspěšně, po otevření adresy virtualhostu byste měli něco vidět :)

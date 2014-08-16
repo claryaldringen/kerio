@@ -17,4 +17,4 @@ class Kerio.UserStory extends Kerio.Component
 		@tickets[ticket.id] = ticket
 		@
 
-	getHtml: -> '<div><h2>' + @name + '</h2>' + @description + '</div>'
+	getHtml: -> '<div><h2>' + @name + '</h2>' + (if @description? then @description else '') + '</div>'

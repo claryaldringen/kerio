@@ -27,9 +27,9 @@ nette:
 
 
 services:
-	- App\Model\UserManager
 	- App\RouterFactory
 	router: @App\RouterFactory::createRouter
 	connection: DibiConnection(%database%)
 	backlog: App\Model\Backlog(@connection)
-	
+	scrumBoard: App\Model\ScrumBoard(@connection)
+

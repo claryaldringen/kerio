@@ -13,7 +13,8 @@ Instalace
 8. Naunstalujte si web server Apache2 (poběží na jakémkoli webserveru, který zvládne PHP, ale např. u nginx neumí htaccess a direktivy v něm uvedené je třeba řešit jinak)
 9. Nainstalujte si Composer podle návodu zde (http://doc.nette.org/cs/2.2/composer)
 10. Spusťe příkaz ```composer install```
-11. V adresáři projektu vytvořte adresáře log a dir a nastavte jim práva.
+11. V adresáři projektu vytvořte adresáře log a temp a nastavte jim práva pro zápis.
 12. Nastavte si virtualhosta.
-13. V adresáři vendors si založte podadresář others a tam nakopírujte dibi (http://dibiphp.com/en/download)
-14. Pokud vše problěho úspěšně, po otevření adresy virtualhostu byste měli něco vidět :)
+13. V adresáři vendors si založte podadresář others
+14. Stahněte si dibi (http://dibiphp.com/en/download) a nakopírujte do adresáře vendors/others. Pozor, složka s dibi obsahuje podsložky dibi a dibi-minified. Je potřeba použít pouze jednu z nich.
+15. Pokud vše problěho úspěšně, po otevření adresy virtualhostu byste měli něco vidět :)

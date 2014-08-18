@@ -4,18 +4,18 @@ li.issue {
 }
 
 div.left {
-	width: 300px;
+	width: 350px;
 	float: left;
 }
 
 div.right {
-	width: 300px;
+	width: 350px;
 	float: right;
 }
 
 ul {
-	padding: 15px 5px;
-	background: #CCC;
+	padding: 5px;
+	margin: 0px;
 }
 
 li {
@@ -28,4 +28,39 @@ td {
 
 div.scrumboard {
 	clear: both;
+}
+
+.list {
+	border: solid 1px #CCC;
+	margin: 5px;
+}
+
+.list-head {
+	background: #000080;
+}
+
+.list-foot {
+	background: #CCC;
+}
+
+.list-head input {
+	background: none;
+	color: #FFF;
+	font-weight: bold;
+	border: none;
+}
+
+.action-icon {
+	margin: 3px;
+	cursor: pointer;
+}
+
+a.scrum-board {
+	float: right;
+	margin-right: 5px;
+	margin-top: 3px;
+}
+
+.lists {
+	width: 800px;
 }

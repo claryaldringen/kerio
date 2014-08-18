@@ -16,6 +16,7 @@ class Backlog extends Model{
 			b.bug_id AS id,
 			b.short_desc AS name,
 			l.id AS list_id,
+			l.type AS list_type,
 			l.name AS list_name,
 			bl.sort_key AS priority
 			FROM bugs b
@@ -35,6 +36,45 @@ class Backlog extends Model{
 				$this->db->query("INSERT INTO [bug_list]", array('bug_id' => $issue->id, 'list_id' => $issue->list_id, 'sort_key' => $issue->priority));
 			}
 		}
+		return $this;
+	}
+
+	public function createList(Nette\Utils\ArrayHash $values) {
+		$this->db->query("INSERT INTO list", $values);
+		return $this;
+	}
+
+	public function setName($id, $name) {
+		$this->db->query('UPDATE list SET name=%s WHERE id=%i', $name, $id);
+		return $this;
+	}
+
+	public function switchType($id) {
+		$type = $this->db->query('SELECT [type] FROM list WHERE id=%i', $id)->fetchSingle();
+		if($type == 'left') $type = 'right';
+		else $type = 'left';
+		$this->db->query('UPDATE list SET type=%s WHERE id=%i', $type, $id);
+		return $this;
+	}
+
+	public function delete($id) {
+		$this->db->query('DELETE FROM list WHERE id=%i', $id);
+
+		$sql = "SELECT b.bug_id FROM bugs b
+			LEFT JOIN bug_list bl ON bl.bug_id=b.bug_id
+			LEFT JOIN dependencies d ON d.dependson=b.bug_id
+			WHERE bl.bug_id IS NULL AND d.dependson IS NULL";
+
+		$unassigned = $this->db->query($sql)->fetchPairs(null, 'bug_id');
+		if(!empty($unassigned)) {
+			$insert = array();
+			foreach($unassigned as $bugId) {
+				$insert[] = '(1,' . $bugId .')';
+			}
+			$sql = "INSERT INTO bug_list (list_id,bug_id) VALUES " . implode(',', $insert);
+			$this->db->query($sql);
+		}
+
 		return $this;
 	}
 }

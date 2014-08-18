@@ -27,3 +27,7 @@ INSERT INTO `bugs` (`bug_id`, `assigned_to`, `bug_file_loc`, `bug_severity`, `bu
 
 INSERT INTO `dependencies` (`blocked`, `dependson`) VALUES
   (7,	10);
+
+ALTER TABLE `list`
+ADD `type` enum('left','right') COLLATE 'utf8_czech_ci' NOT NULL,
+COMMENT='';

@@ -1,6 +1,8 @@
 
 class Kerio.ListFactory extends Kerio.Component
 
+	BACKLOG_ID = 1
+
 	constructor: (id, di, parent) ->
 		super id, di
 		@issues = []
@@ -10,7 +12,7 @@ class Kerio.ListFactory extends Kerio.Component
 	getHtml: ->
 
 	load: ->
-		@di.getRequest().addTask(@di.createTask('ajax/load-stories', {}, @loadResponse, @)).send()
+		@di.getRequest().addTask(@di.createTask('/ajax/load-stories', {}, @loadResponse, @)).send()
 		@
 
 	getLists: -> @lists
@@ -21,7 +23,7 @@ class Kerio.ListFactory extends Kerio.Component
 		@balanceIssues()
 
 	save: ->
-		@di.getRequest().addTask(@di.createTask('ajax/save-stories', @issues, @saveResponse, @)).send()
+		@di.getRequest().addTask(@di.createTask('/ajax/save-stories', @issues, @saveResponse, @)).send()
 		@
 
 	saveResponse: (response, me) ->
@@ -33,7 +35,7 @@ class Kerio.ListFactory extends Kerio.Component
 			for issue in @issues
 				if not @lists[issue.list_id]?
 					@lists[issue.list_id] = new Kerio.SortableList(@id + '_' + issue.list_id, @di, @)
-					@lists[issue.list_id].setName(issue.list_name).setListId issue.list_id
+					@lists[issue.list_id].setName(issue.list_name).setListId(issue.list_id).setType(issue.list_type)
 				@lists[issue.list_id].setIssue issue if issue.id?
 			@changed = no
 			@render()
@@ -52,7 +54,7 @@ class Kerio.ListFactory extends Kerio.Component
 
 	getHtml: ->
 		html = '<div class="left">'
-		html += list.getHtml() for key, list of @lists when key*1 isnt 2
+		html += '<div class="list" id="' + list.id + '">' + list.getHtml() + '</div>' for key, list of @lists when list.type is 'left'
 		html += '</div><div class="right">'
-		html += list.getHtml() for key, list of @lists when key*1 is 2
+		html += '<div class="list" id="' + list.id + '">' + list.getHtml() + '</div>' for key, list of @lists when list.type is 'right'
 		html += '</div><div style="clear: both;"></div>'

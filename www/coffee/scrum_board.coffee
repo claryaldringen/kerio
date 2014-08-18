@@ -9,7 +9,7 @@ class Kerio.ScrumBoard extends Kerio.Component
 	getElPlaceId: (userStoryId, statusId) -> @id + '_' + userStoryId + '_' + statusId
 
 	load: ->
-		@di.getRequest().addTask(@di.createTask('ajax/load-scrumboard', {}, @loadResponse, @)).send()
+		@di.getRequest().addTask(@di.createTask('/ajax/load-scrumboard', {id: $('#' + @id).attr('listid')}, @loadResponse, @)).send()
 		@
 
 	loadResponse: (response) ->
@@ -25,7 +25,7 @@ class Kerio.ScrumBoard extends Kerio.Component
 		@render()
 
 	save: (ticketId, statusId) ->
-		@di.getRequest().addTask(@di.createTask('ajax/save-scrumboard', {ticketId: ticketId, statusId: statusId}, @saveResponse, @)).send()
+		@di.getRequest().addTask(@di.createTask('/ajax/save-scrumboard', {ticketId: ticketId, statusId: statusId}, @saveResponse, @)).send()
 		@
 
 	saveResponse: (response) ->

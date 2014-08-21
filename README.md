@@ -17,4 +17,5 @@ Instalace
 12. Nastavte si virtualhosta.
 13. V adresáři vendors si založte podadresář others
 14. Stahněte si dibi (http://dibiphp.com/en/download) a nakopírujte do adresáře vendors/others. Pozor, složka s dibi obsahuje podsložky dibi a dibi-minified. Je potřeba použít pouze jednu z nich.
-15. Pokud vše problěho úspěšně, po otevření adresy virtualhostu byste měli něco vidět :)
+15. Nad databází spusťte soubor install/install.sql, doporučuji použít např. Adminer (http://www.adminer.org/cs/)
+16. Pokud vše problěho úspěšně, po otevření adresy virtualhostu byste měli něco vidět :)

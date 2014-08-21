@@ -64,7 +64,7 @@ class Kerio.SortableList extends Kerio.Component
 		html += '</div>'
 		if @opened
 			html += '<ul id="' + @getElUlId() + '" class="connected">'
-			html += '<li class="issue" issueid="' + issue.id + '">' + issue.name + '</li>' for issue in @issues
+			html += '<li class="issue ' + (if issue.status_id in [4,5] then 'ticket-done' else '') + '" issueid="' + issue.id + '">' + issue.name + '</li>' for issue in @issues
 			html += '</ul>'
 		html += '<div class="list-foot">'
 		html += '<img src="images/arrow_' + (if @opened then 'up' else 'down') + '.png" title="Switch positions" class="action-icon switch-open">'

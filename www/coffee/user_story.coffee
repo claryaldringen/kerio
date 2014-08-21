@@ -14,7 +14,10 @@ class Kerio.UserStory extends Kerio.Component
 	getTicketById: (ticketId) -> @tickets[ticketId]
 
 	addTicket: (ticket) ->
+		ticket.getEvent('change').subscribe @ticketChange, @
 		@tickets[ticket.id] = ticket
 		@
+
+	ticketChange: -> @getEvent('change').fire()
 
 	getHtml: -> '<div><h2>' + @name + '</h2>' + (if @description? then @description else '') + '</div>'

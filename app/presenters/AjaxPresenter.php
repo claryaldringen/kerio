@@ -9,7 +9,7 @@ class AjaxPresenter extends BasePresenter
 {
 
 	public function renderLoadStories() {
-		$this->template->data = json_encode(array('issues' => $this->context->backlog->getData()));
+		$this->template->data = json_encode(array('issues' => $this->context->backlog->getData($this->getSession('bugzilla')->productId)));
   }
 
 	public function renderSaveStories() {
@@ -21,6 +21,7 @@ class AjaxPresenter extends BasePresenter
 		$data = $this->getData();
 		$this->template->data = json_encode(array(
 			'statuses' => $this->context->scrumBoard->getStatuses(),
+			'users' => $this->context->scrumBoard->getUsers(),
 			'stories' => $this->context->scrumBoard->getStories($data->id)
 		));
 	}
@@ -43,6 +44,17 @@ class AjaxPresenter extends BasePresenter
 	public function renderDeleteList() {
 		$data = $this->getData();
 		$this->context->backlog->delete($data->id);
+	}
+
+	public function renderSaveAssign() {
+		$data = $this->getData();
+		$this->context->scrumBoard->assignTicket($data->ticketId, $data->userId);
+	}
+
+	public function renderLoadGeneral() {
+		$session = $this->getSession('bugzilla');
+		$this->template->userId = $session->userId;
+		$this->template->productId = $session->productId;
 	}
 
 	private function getData() {

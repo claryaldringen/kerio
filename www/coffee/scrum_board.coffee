@@ -14,13 +14,15 @@ class Kerio.ScrumBoard extends Kerio.Component
 
 	loadResponse: (response) ->
 		@statuses = response.statuses
+		@di.setUsers(response.users)
 		for story in response.stories
 			storyId = @id + '_' + story.id
 			@userStories[storyId] = new Kerio.UserStory storyId, @di, @
+			@userStories[storyId].getEvent('change').subscribe @onStoryChange, @
 			@userStories[storyId].setName(story.name).setDescription story.description
 			for ticket in story.tickets
 				kTicket = new Kerio.Ticket storyId + '_' + ticket.id, @di, @
-				kTicket.setStatusId(ticket.status_id).setName(ticket.name).setTicketId(ticket.id)
+				kTicket.setStatusId(ticket.status_id).setName(ticket.name).setTicketId(ticket.id).setOwner(ticket.owner);
 				@userStories[storyId].addTicket kTicket
 		@render()
 
@@ -29,6 +31,8 @@ class Kerio.ScrumBoard extends Kerio.Component
 		@
 
 	saveResponse: (response) ->
+
+	onStoryChange: -> alert 'foo'
 
 	dropTicket: (userStoryId, ticketId, statusId) ->
 		ticket = @userStories[userStoryId].getTicketById ticketId
@@ -44,7 +48,7 @@ class Kerio.ScrumBoard extends Kerio.Component
 			@dropTicket  `$(this).attr('userStoryId')`, data.id, `$(this).attr('statusId')`
 
 	getHtml: ->
-		html = '<table><tr><th>User Stories</th>'
+		html = '<table class="scrum-board"><tr><th>User Stories</th>'
 		html += '<th>' + status.name + '</th>' for status in @statuses
 		html += '</tr>'
 		for userStoryId, userStory of @userStories
@@ -52,7 +56,7 @@ class Kerio.ScrumBoard extends Kerio.Component
 			html += '<td>'  + userStory.getHtml() + '</td>'
 			for status in @statuses
 				html += '<td class="dropable" userStoryId="' + userStoryId + '" statusId="' + status.id + '">'
-				html += '<div id="' + ticket.id + '" draggable="true">' + ticket.getHtml() + '</div>' for ticketId, ticket of userStory.getTicketsByStatusId status.id
+				html += '<div id="' + ticket.id + '" draggable="true" class="ticket-outer">' + ticket.getHtml() + '</div>' for ticketId, ticket of userStory.getTicketsByStatusId status.id
 				html += '</td>'
 			html += '</tr>'
 		html += '</table>'

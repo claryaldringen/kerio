@@ -1,7 +1,10 @@
 
 class Kerio.Di
 
-	constructor: -> @services = []
+	constructor: ->
+		@services = []
+		@users = []
+		@userId = null
 
 	createTask: (url, params, callback, callbackObject) -> new Kerio.Task url, params, callback, callbackObject
 
@@ -16,3 +19,15 @@ class Kerio.Di
 	getScrumBoard: (id) ->
 		@services['scrumBoard'] = {}
 		@services['scrumBoard'][id] = new Kerio.ScrumBoard id, @, null
+
+	setUsers: (@users) -> @
+
+	getUsers: -> @users
+
+	load: -> @getRequest().addTask(@createTask('/ajax/load-general', {}, @loadResponse, @)).send()
+
+	loadResponse: (response) ->
+		@userId = response.userId
+		@productd = response.productId
+		@getListFactory('lists').load() if document.getElementById 'lists'
+		@getScrumBoard('scrum_board').load() if document.getElementById 'scrum_board'

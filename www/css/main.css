@@ -64,3 +64,19 @@ a.scrum-board {
 .lists {
 	width: 800px;
 }
+
+.ticket{
+	overflow: hidden;
+	word-wrap: normal;
+	height: 150px;
+}
+
+.ticket-outer {
+	width: 150px;
+	height: 150px;
+	border: solid 1px #000;
+}
+
+table.scrum-board th {
+	width: 20%;
+}

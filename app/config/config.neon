@@ -32,4 +32,5 @@ services:
 	connection: DibiConnection(%database%)
 	backlog: App\Model\Backlog(@connection)
 	scrumBoard: App\Model\ScrumBoard(@connection)
+	general: App\Model\General(@connection)
 

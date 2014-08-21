@@ -19,6 +19,7 @@ class ScrumBoard extends Model{
 		$sqlStories = "SELECT
 			b.bug_id AS id,
 			b.short_desc AS name,
+			b.assigned_to AS owner,
 			bf.comments AS description,
 			bs.id AS status_id
 			FROM bugs b
@@ -47,9 +48,22 @@ class ScrumBoard extends Model{
 		return $stories;
 	}
 
+	public function getUsers() {
+		$rows = $this->db->query('SELECT userid AS id, realname AS name FROM profiles')->fetchAll();
+		foreach($rows as $i => $row) {
+			$rows[$i]->color = '#' . substr(md5($row->name), 0, 6);
+		}
+		return $rows;
+	}
+
 	public function setStatus($bugId, $statusId) {
 		$statuses = $this->getStatusesObject()->fetchPairs();
 		$this->db->query("UPDATE bugs SET bug_status=%s WHERE bug_id=%i", $statuses[$statusId], $bugId);
+		return $this;
+	}
+
+	public function assignTicket($ticketId, $userId) {
+		$this->db->query("UPDATE bugs SET assigned_to=%i,bug_status='ASSIGNED' WHERE bug_id=%i", $userId, $ticketId);
 		return $this;
 	}
 

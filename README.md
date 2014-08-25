@@ -15,7 +15,5 @@ Instalace
 10. Spusťe příkaz ```composer install```
 11. V adresáři projektu vytvořte adresáře log a temp a nastavte jim práva pro zápis.
 12. Nastavte si virtualhosta.
-13. V adresáři vendors si založte podadresář others
-14. Stahněte si dibi (http://dibiphp.com/en/download) a nakopírujte do adresáře vendors/others. Pozor, složka s dibi obsahuje podsložky dibi a dibi-minified. Je potřeba použít pouze jednu z nich.
-15. Nad databází spusťte soubor install/install.sql, doporučuji použít např. Adminer (http://www.adminer.org/cs/)
-16. Pokud vše problěho úspěšně, po otevření adresy virtualhostu byste měli něco vidět :)
+13. Nad databází spusťte soubor install/install.sql, doporučuji použít např. Adminer (http://www.adminer.org/cs/)
+14. Pokud vše problěho úspěšně, po otevření adresy virtualhostu byste měli něco vidět :)

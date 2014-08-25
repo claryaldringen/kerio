@@ -31,3 +31,7 @@ class Kerio.Di
 		@productd = response.productId
 		@getListFactory('lists').load() if document.getElementById 'lists'
 		@getScrumBoard('scrum_board').load() if document.getElementById 'scrum_board'
+
+	createListItem: (id, parent) -> new Kerio.ListItem(id, @, parent)
+
+	createList: (id, parent) -> new Kerio.SortableList(id, @, parent)

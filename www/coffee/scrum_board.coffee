@@ -24,15 +24,15 @@ class Kerio.ScrumBoard extends Kerio.Component
 				kTicket = new Kerio.Ticket storyId + '_' + ticket.id, @di, @
 				kTicket.setStatusId(ticket.status_id).setName(ticket.name).setTicketId(ticket.id).setOwner(ticket.owner);
 				@userStories[storyId].addTicket kTicket
-		@render()
+		@removeOpacity().render()
 
 	save: (ticketId, statusId) ->
-		@di.getRequest().addTask(@di.createTask('/ajax/save-scrumboard', {ticketId: ticketId, statusId: statusId}, @saveResponse, @)).send()
-		@
+		@di.getRequest().addTask(@di.createTask('/ajax/save-scrumboard', {id: $('#' + @id).attr('listid'), ticketId: ticketId, statusId: statusId}, @saveResponse, @)).send()
+		@addOpacity()
 
-	saveResponse: (response) ->
+	saveResponse: (response) -> @loadResponse response
 
-	onStoryChange: -> alert 'foo'
+	onStoryChange: -> @load()
 
 	dropTicket: (userStoryId, ticketId, statusId) ->
 		ticket = @userStories[userStoryId].getTicketById ticketId
@@ -48,12 +48,12 @@ class Kerio.ScrumBoard extends Kerio.Component
 			@dropTicket  `$(this).attr('userStoryId')`, data.id, `$(this).attr('statusId')`
 
 	getHtml: ->
-		html = '<table class="scrum-board"><tr><th>User Stories</th>'
+		html = '<table class="scrum-board"><tr><th class="user-story">User Stories</th>'
 		html += '<th>' + status.name + '</th>' for status in @statuses
 		html += '</tr>'
 		for userStoryId, userStory of @userStories
 			html += '<tr>'
-			html += '<td>'  + userStory.getHtml() + '</td>'
+			html += '<th class="user-story">'  + userStory.getHtml() + '</th>'
 			for status in @statuses
 				html += '<td class="dropable" userStoryId="' + userStoryId + '" statusId="' + status.id + '">'
 				html += '<div id="' + ticket.id + '" draggable="true" class="ticket-outer">' + ticket.getHtml() + '</div>' for ticketId, ticket of userStory.getTicketsByStatusId status.id

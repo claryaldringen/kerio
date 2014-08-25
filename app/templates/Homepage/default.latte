@@ -1,9 +1,16 @@
 {* This is the welcome page, you can delete it *}
 {block content}
+	<div class="header">
 		{form sprintForm}
 			{label name/}{input name}
 			{label type /}{input type}
+			{label target_milestone /}{input target_milestone}
 			{input create}
 		{/form}
-    <div id="lists" class="lists"></div>
+	</div>
+	<div class="main">
+		<div class="center">
+    	<div id="lists" class="lists"></div>
+    </div>
+  </div>
 {/block}

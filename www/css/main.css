@@ -1,15 +1,46 @@
+body{
+	font-family: Arial;
+	font-size: 14px;
+}
+
+div.header{
+	background: #000;
+	position: fixed;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	color: #FFF;
+	padding: 3px;
+	text-align: center;
+}
+
+div.main {
+	text-align: center;
+	padding: 30px;
+}
+
+div.center{
+	margin: auto;
+	width: 800px;
+	text-align: left;
+}
 
 li.issue {
 	border: solid 1px black;
+	min-height: 25px;
+	margin-top: 1px;
+	cursor: move;
+	padding-top: 5px;
+	background: #FFF;
 }
 
 div.left {
-	width: 350px;
+	width: 390px;
 	float: left;
 }
 
 div.right {
-	width: 350px;
+	width: 390px;
 	float: right;
 }
 
@@ -32,7 +63,7 @@ div.scrumboard {
 
 .list {
 	border: solid 1px #CCC;
-	margin: 5px;
+	margin: 10px;
 }
 
 .list-head {
@@ -65,7 +96,7 @@ a.scrum-board {
 	width: 800px;
 }
 
-.ticket{
+div.ticket{
 	overflow: hidden;
 	word-wrap: normal;
 	height: 150px;
@@ -75,8 +106,70 @@ a.scrum-board {
 	width: 150px;
 	height: 150px;
 	border: solid 1px #000;
+	margin: 1px;
+	float: left;
+}
+
+table.scrum-board {
+	width: 100%;
+	border-collapse: collapse;
+	border: solid 1px #000;
 }
 
 table.scrum-board th {
-	width: 20%;
+	background: #000;
+	color: #FFF;
+	width: 30%;
+	border: 1px solid #FFF;
+}
+
+li.ticket-done {
+  text-decoration: line-through;
+}
+
+input.hours {
+	width: 36px;
+	float: right;
+	margin-right: 3px;
+	margin-top: -1px;
+	text-align: right;
+}
+
+span.points{
+	float: right;
+	color: #FFF;
+	margin-right: 10px;
+}
+
+span.epic{
+	color: #FF0000;
+}
+
+span.ticket{
+	padding-left: 5px;
+}
+
+li.sub{
+	border-color: #CCC;
+}
+
+div.open{
+	width: 16px;
+	float: left;
+	font-size: 18px;
+	margin-left: 2px;
+	margin-right: -8px;
+	cursor: pointer;
+}
+
+th p{
+	font-weight: normal;
+}
+
+th.user-story{
+	width: 10% !important;
+}
+
+.opacity{
+	opacity: 0.5;
 }

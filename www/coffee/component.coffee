@@ -15,5 +15,13 @@ class Kerio.Component
 		@events[eventName] = new Kerio.Event() if not @events[eventName]?
 		@events[eventName]
 
+	addOpacity: ->
+		$('#' + @id).addClass 'opacity'
+		@
+
+	removeOpacity: ->
+		$('#' + @id).removeClass 'opacity'
+		@
+
 	bindEvents: ->
 		child.bindEvents() for id,child of @children

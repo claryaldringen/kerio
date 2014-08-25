@@ -23,12 +23,10 @@ class Kerio.Ticket extends Kerio.Component
 		@
 
 	assign: (userId) ->
-		changeStatus = if @owner.id is 0 then yes else no
-		@di.getRequest().addTask(@di.createTask('/ajax/save-assign', {ticketId: @ticketId, userId: userId, changeStatus: changeStatus}, @saveResponse, @)).send()
-		@setOwner(userId*1)
-		if changeStatus then @getEvent('change').fire() else @render()
+		@di.getRequest().addTask(@di.createTask('/ajax/save-assign', {ticketId: @ticketId, userId: userId}, @saveResponse, @)).send()
+		@
 
-	saveResponse: ->
+	saveResponse: -> @getEvent('change').fire()
 
 	dragStart: (event) -> event.dataTransfer.setData 'Text', JSON.stringify {id: @id, ticket_id: @ticketId, status_id: @statusId}
 

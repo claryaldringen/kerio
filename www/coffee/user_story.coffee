@@ -20,4 +20,4 @@ class Kerio.UserStory extends Kerio.Component
 
 	ticketChange: -> @getEvent('change').fire()
 
-	getHtml: -> '<div><h2>' + @name + '</h2>' + (if @description? then @description else '') + '</div>'
+	getHtml: -> '<div><h2>' + @name + '</h2><p>' + (if @description? then @description else '') + '</p></div>'

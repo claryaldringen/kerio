@@ -14,6 +14,7 @@ describe 'Kerio.Request', ->
 	describe '#send', ->
 
 		it 'should send ajax request task', ->
+			spyOn(JSON, 'parse').andReturn  response_code: 1, message: 'Hello World.'
 			me = someHandler: ->
 			spyOn(me, 'someHandler')
 			object.tasks[0] =

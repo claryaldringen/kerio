@@ -29,9 +29,9 @@ class Kerio.ListFactory extends Kerio.Component
 
 	save: ->
 		@di.getRequest().addTask(@di.createTask('/ajax/save-stories', @issues, @saveResponse, @)).send()
-		@
+		@addOpacity()
 
-	saveResponse: (response, me) ->
+	saveResponse: (response, me) -> @removeOpacity()
 
 	balanceIssues: ->
 		@issues.sort (prev, next) -> prev.priority - next.priority

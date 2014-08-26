@@ -5,7 +5,7 @@ module.exports = (config) ->
 		frameworks: ['jasmine']
 		files: [
 			'bower_components/jquery/dist/jquery.js'
-			'coffee/kerio.coffee'
+			'js/kerio.js'
 			'coffee/*.coffee'
 			'tests/*.coffee'
 			{pattern: 'tests/*.json', watched: yes, included: no, served: yes}

@@ -8,6 +8,7 @@ use Nette\Application\UI\Form;
  */
 class HomepagePresenter extends BasePresenter
 {
+
 	public function actionDefault($user, $product) {
 		$session = $this->getSession('bugzilla');
 		if(!empty($user)) {
@@ -36,7 +37,24 @@ class HomepagePresenter extends BasePresenter
 		$this->redirect('this');
 	}
 
+	public function beforeRender() {
+		$product = $this->context->general->getProduct( $this->getSession('bugzilla')->productId);
+		$this->template->product = $product ? $product : 'Not selected';
+	}
+
 	public function renderScrumboard($id) {
 		$this->template->id = $id;
+	}
+
+	public function renderDefault() {
+		$productIsSet = !!$this->getSession('bugzilla')->productId;
+		$this->template->productIsSet = $productIsSet;
+		if(!$productIsSet) {
+			$this->template->products = $this->context->general->getProducts();
+		}
+	}
+
+	public function handleSetProduct($product) {
+		$this->getSession('bugzilla')->productId = $this->context->general->getProductId($product);
 	}
 }

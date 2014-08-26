@@ -16,4 +16,5 @@ Instalace
 11. V adresáři projektu vytvořte adresáře log a temp a nastavte jim práva pro zápis.
 12. Nastavte si virtualhosta.
 13. Nad databází spusťte soubor install/install.sql, doporučuji použít např. Adminer (http://www.adminer.org/cs/)
-14. Pokud vše problěho úspěšně, po otevření adresy virtualhostu byste měli něco vidět :)
+14. Nahraďte soubor common-links.html.tmpl v adresáři bugzilly souborem z toho repozitáře (možná bude potřeba změnit url kerio.dev na příslušnou url na které běží tato aplikace)
+15. Pokud vše problěho úspěšně, po otevření adresy virtualhostu byste měli něco vidět :)

@@ -8,10 +8,10 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>{ifset #title}{include title|striptags} | {/ifset}Nette Sandbox</title>
+	<title>Kerio ScrumBoard</title>
 
 	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/main.css">
-	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	<link rel="shortcut icon" href="{$basePath}/favicon.jpg">
 	<script type="text/javascript" src="{$basePath}/bower_components/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="{$basePath}/bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="{$basePath}/js/kerio.js"></script>
@@ -30,7 +30,20 @@
 </head>
 
 <body>
-	{include content}
-	<a href="?user=user2@kerio.com&product=TestProduct">test</a>
+	<div class="header">
+		<a href="/" class="title"><img src="/images/favicon.jpg">&nbsp;Kerio ScrumBoard</a>
+		<span class="product">Product: <b>{$product}</b></span>
+		{if isset($productIsSet) && $productIsSet}
+			{form sprintForm}
+				{label name/}{input name}
+				{label type /}{input type}
+				{label target_milestone /}{input target_milestone}
+				{input create}
+			{/form}
+		{/if}
+	</div>
+	<div class="main">
+		{include content}
+	</div>
 </body>
 </html>

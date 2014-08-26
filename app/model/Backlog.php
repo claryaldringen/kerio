@@ -10,6 +10,12 @@ use Nette;
  */
 class Backlog extends Model{
 
+	/**
+	 * Returns issues and other data for all lists (backlogs, sprints, etc.)
+	 *
+	 * @param $productId
+	 * @return \DibiRow[]
+	 */
 	public function getData($productId) {
 
 		$sql = "SELECT
@@ -55,6 +61,12 @@ class Backlog extends Model{
 		return $rows;
 	}
 
+	/**
+	 * Save issue list and priority into DB.
+	 *
+	 * @param array $issues
+	 * @return array
+	 */
 	public function setData(array $issues) {
 		$issuesToNew = array();
 		foreach($issues as $issue) {
@@ -70,17 +82,37 @@ class Backlog extends Model{
 		return $issuesToNew;
 	}
 
+	/**
+	 * Creates new list (backlog, sprint, etc.).
+	 *
+	 * @param Nette\Utils\ArrayHash $values
+	 * @param $productId
+	 * @return $this
+	 */
 	public function createList(Nette\Utils\ArrayHash $values, $productId) {
 		$values['product_id'] = $productId;
 		$this->db->query("INSERT INTO list", $values);
 		return $this;
 	}
 
+	/**
+	 * Sets name of list.
+	 *
+	 * @param int $id ID of list
+	 * @param string $name New name
+	 * @return $this
+	 */
 	public function setName($id, $name) {
 		$this->db->query('UPDATE list SET name=%s WHERE id=%i', $name, $id);
 		return $this;
 	}
 
+	/**
+	 * Switches type of list (sprint -> backlog, backlog -> sprint)
+	 *
+	 * @param int $id ID of list
+	 * @return $this
+	 */
 	public function switchType($id) {
 		$type = $this->db->query('SELECT [type] FROM list WHERE id=%i', $id)->fetchSingle();
 		if($type == 'sprint') $type = 'backlog';
@@ -89,6 +121,12 @@ class Backlog extends Model{
 		return $this;
 	}
 
+	/**
+	 * Deletes list.
+	 *
+	 * @param int $id ID of list
+	 * @return $this
+	 */
 	public function delete($id) {
 		$this->db->query('DELETE FROM list WHERE id=%i', $id);
 
@@ -110,6 +148,12 @@ class Backlog extends Model{
 		return $this;
 	}
 
+	/**
+	 * Moves user stories without list into list by defined by target milestone.
+	 *
+	 * @param $productId
+	 * @return $this
+	 */
 	public function balanceStories($productId) {
 		$sql = "SELECT b.bug_id,b.target_milestone FROM bugs b
 				LEFT JOIN bug_list bl ON b.bug_id=bl.bug_id
@@ -132,16 +176,37 @@ class Backlog extends Model{
 		return $this;
 	}
 
+	/**
+	 * Return all target milestones of all bugs from product.
+	 *
+	 * @param $productId
+	 * @return array
+	 */
 	public function getMilestones($productId) {
 		$sql = "SELECT target_milestone FROM bugs WHERE product_id=%i AND target_milestone != '---' GROUP BY target_milestone";
 		return $this->db->query($sql, $productId)->fetchPairs('target_milestone', 'target_milestone');
 	}
 
+	/**
+	 * Sets if list is open.
+	 *
+	 * @param int $listId
+	 * @param bool $opened
+	 * @return $this
+	 */
 	public function setOpened($listId, $opened) {
 		$this->db->query("UPDATE list SET opened=%i WHERE id=%i", (int)$opened, $listId);
 		return $this;
 	}
 
+	/**
+	 * Set points (estimated time) to ticket (bug).
+	 *
+	 * @param int $id Ticket id
+	 * @param float $points Count of estimated scrum points
+	 * @param float $remains Count of remaining scrum points
+	 * @return $this
+	 */
 	public function setPoints($id, $points, $remains) {
 		$this->db->query("UPDATE bugs SET estimated_time=%f,remaining_time=%f WHERE bug_id=%i", $points, $remains, $id);
 		return $this;

@@ -58,6 +58,8 @@ class Kerio.ListItem extends Kerio.Component
 
 	saveResponse: ->
 
+	getFormated: (string) -> if string.length > 36 then string.substr(0, 36) + '...' else string
+
 	bindEvents: ->
 		super()
 		$('#' + @id + ' .points').bind 'change', => @savePoints $('#' + @id + ' .points').val()
@@ -76,7 +78,7 @@ class Kerio.ListItem extends Kerio.Component
 			remains = @remains
 		html = ''
 		html += '<div class="open">' + (if @opened then '-' else '+') + '</div>' if @issues.length
-		html += '<span class="ticket ' + (if @issues.length then 'epic' else '') + '">' + @name + '</span>'
+		html += '<span class="ticket ' + (if @issues.length then 'epic' else '') + '" title="' + @name + '">' + @getFormated(@name) + '</span>'
 		html += '<input type="number" min="0" max="' + @points + '" class="hours remains" value="' + remains + '" ' + (if @issues.length then 'readonly' else '') + '>'
 		html += '<input type="number" min="0" class="hours points" value="' + points + '" ' + (if @issues.length then 'readonly' else '') + '>'
 		if @issues.length and @opened

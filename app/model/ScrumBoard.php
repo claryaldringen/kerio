@@ -15,10 +15,21 @@ class ScrumBoard extends Model{
 	const STATUS_ASSIGNED = 3;
 	const STATUS_RESOLVED = 4;
 
+	/**
+	 * Returns all statuses.
+	 *
+	 * @return \DibiRow[]
+	 */
 	public function getStatuses() {
 		return $this->db->query("SELECT id,name FROM scrum_status")->fetchAll();
 	}
 
+	/**
+	 * Returns stories with tickets for one list (sprint, backlog, etc.).
+	 *
+	 * @param int $listId ID of list
+	 * @return \DibiRow[]
+	 */
 	public function getStories($listId) {
 		$sqlStories = "SELECT
 			b.bug_id AS id,
@@ -56,6 +67,11 @@ class ScrumBoard extends Model{
 		return $stories;
 	}
 
+	/**
+	 * Return all users (id, realname, color).
+	 *
+	 * @return \DibiRow[]
+	 */
 	public function getUsers() {
 		$rows = $this->db->query('SELECT userid AS id, realname AS name FROM profiles')->fetchAll();
 		foreach($rows as $i => $row) {
@@ -64,16 +80,33 @@ class ScrumBoard extends Model{
 		return $rows;
 	}
 
+	/**
+	 * Sets Bugzilla status into bug.
+	 *
+	 * @param int $bugId
+	 * @param int $statusId
+	 * @param int $userId
+	 * @return $this
+	 */
 	public function setStatus($bugId, $statusId, $userId) {
 		$sql = "assigned_to=assigned_to";
 		if($statusId == self::STATUS_ASSIGNED) {
 			$sql = "assigned_to=" . $userId;
+		} elseif($statusId == self::STATUS_RESOLVED) {
+			$sql = "remaining_time=0";
 		}
-		$statuses = $this->getStatusesObject()->fetchPairs();
+
+		$statuses = $this->db->query("SELECT id,[value] AS name FROM bug_status WHERE isactive=1 ORDER BY is_open, sortkey")->fetchPairs();
 		$this->db->query("UPDATE bugs SET bug_status=%s,%sql WHERE bug_id=%i", $statuses[$statusId], $sql, $bugId);
 		return $this;
 	}
 
+	/**
+	 * Sets epics done if their subtickets are done.
+	 *
+	 * @param int $userId
+	 * @return $this
+	 */
 	public function setEpicDone($userId) {
 		$epics = array();
 		$rows = $this->db->query("SELECT blocked AS id,bug_status FROM dependencies d JOIN bugs b ON d.dependson=b.bug_id")->fetchAll();
@@ -88,17 +121,29 @@ class ScrumBoard extends Model{
 		return $this;
 	}
 
+	/**
+	 * Translates scrum status to bugzilla status and set it to bug.
+	 *
+	 * @param int $bugId
+	 * @param int $statusId
+	 * @param int $userId
+	 * @return $this
+	 */
 	public function setScrumStatus($bugId, $statusId, $userId) {
 		$statusId = $this->db->query("SELECT bug_status FROM bug_status_has_scrum_status WHERE scrum_status=%i LIMIT 1", $statusId)->fetchSingle();
 		return $this->setStatus($bugId, $statusId, $userId);
 	}
 
+	/**
+	 * Assigns bug to user.
+	 *
+	 * @param int $ticketId
+	 * @param int $userId
+	 * @return $this
+	 */
 	public function assignTicket($ticketId, $userId) {
 		$this->db->query("UPDATE bugs SET assigned_to=%i,bug_status='ASSIGNED' WHERE bug_id=%i", $userId, $ticketId);
 		return $this;
 	}
 
-	protected function getStatusesObject() {
-		return $this->db->query("SELECT id,[value] AS name FROM bug_status WHERE isactive=1 ORDER BY is_open, sortkey");
-	}
 }

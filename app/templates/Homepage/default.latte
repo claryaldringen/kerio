@@ -1,16 +1,13 @@
 {* This is the welcome page, you can delete it *}
 {block content}
-	<div class="header">
-		{form sprintForm}
-			{label name/}{input name}
-			{label type /}{input type}
-			{label target_milestone /}{input target_milestone}
-			{input create}
-		{/form}
+	<div class="center">
+		{if $productIsSet}
+			<div id="lists" class="lists"></div>
+		{else}
+			Please, choose your product: <br>
+			{foreach $products as $product => $description}
+				<a href="{plink 'setProduct!', 'product' => $product}">{$product}</a><span class="description">{$description}</span><br>
+			{/foreach}
+		{/if}
 	</div>
-	<div class="main">
-		<div class="center">
-    	<div id="lists" class="lists"></div>
-    </div>
-  </div>
 {/block}

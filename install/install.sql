@@ -43,6 +43,10 @@ ALTER TABLE `list`
 ADD `opened` tinyint NOT NULL DEFAULT '1',
 COMMENT='';
 
+ALTER TABLE `list`
+ADD `target_milestone` varchar(20) COLLATE 'utf8_czech_ci' NOT NULL DEFAULT '---',
+COMMENT='';
+
 -- [2014-08-16 Clary 0.012s] Naplneni testovacimi daty
 /*
 INSERT INTO `list` (`name`)
